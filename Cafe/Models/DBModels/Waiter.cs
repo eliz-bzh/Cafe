@@ -11,5 +11,7 @@ namespace Cafe.Models.DBModels
         public string Name { get; set; }
         public string Surname { get; set; }
         public string Patronymic { get; set; }
+
+        public ICollection<Order> Orders { get; set; }
     }
 }

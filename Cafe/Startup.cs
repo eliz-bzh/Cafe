@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Cafe.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -9,6 +10,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Cafe.Services.DBServices;
 
 namespace Cafe
 {
@@ -31,8 +33,21 @@ namespace Cafe
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            services.AddDbContext<ApplicationContext>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.AddSingleton(typeof(DBCategoryService));
+            services.AddSingleton(typeof(DBDishCompositionService));
+            services.AddSingleton(typeof(DBDishOrderInfoService));
+            services.AddSingleton(typeof(DBDishService));
+            services.AddSingleton(typeof(DBDrinkOrderInfoService));
+            services.AddSingleton(typeof(DBDrinkService));
+            services.AddSingleton(typeof(DBIngredientService));
+            services.AddSingleton(typeof(DBOrderService));
+            services.AddSingleton(typeof(DBStockService));
+            services.AddSingleton(typeof(DBUnitsService));
+            services.AddSingleton(typeof(DBWaiterService));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -19,7 +19,7 @@ namespace Cafe.Models.DBModels
         public double Price { get; set; }
 
         public ICollection<DishComposition> DishCompositions { get; set; }
-        public ICollection<Menu> Menus { get; set; }
-        public ICollection<OrderInfo> OrderInfos { get; set; }
+        
+        public ICollection<DishOrderInfo> DishOrderInfos { get; set; }
     }
 }

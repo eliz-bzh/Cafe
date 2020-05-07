@@ -11,6 +11,7 @@ namespace Cafe.Models
     {
         public ApplicationContext()
         {
+            //this.Database.EnsureDeleted();
             this.Database.EnsureCreated();
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -23,8 +24,9 @@ namespace Cafe.Models
         public virtual DbSet<Dish> Dishes { get; set; }
         public virtual DbSet<Drink> Drinks { get; set; }
         public virtual DbSet<Ingredient> Ingredients { get; set; }
-        public virtual DbSet<Menu> Menus { get; set; }
-        public virtual DbSet<OrderInfo> OrderInfos { get; set; }
+        
+        public virtual DbSet<DrinkOrderInfo> DrinkOrderInfos { get; set; }
+        public virtual DbSet<DishOrderInfo> DishOrderInfos { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<Stock> Stocks { get; set; }
         public virtual DbSet<Units> Units { get; set; }

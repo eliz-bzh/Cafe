@@ -102,7 +102,6 @@ namespace Cafe.Services.DBServices
                 }
 
                 prevEntity.Date = newEntity.Date;
-                prevEntity.Info = newEntity.Info;
                 prevEntity.NumberTable = newEntity.NumberTable;
                 prevEntity.WaiterId = newEntity.WaiterId;
                 prevEntity.TotalPrice = newEntity.TotalPrice;

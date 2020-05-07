@@ -8,9 +8,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Cafe.Services.DBServices
 {
-    public class DBMenuService : IDBService<Menu>
+    public class DBDishOrderInfoService : IDBService<DishOrderInfo>
     {
-        public bool Create(Menu entity)
+        public bool Create(DishOrderInfo entity)
         {
             if (entity == null)
             {
@@ -39,19 +39,19 @@ namespace Cafe.Services.DBServices
             }
         }
 
-        public IList<Menu> GetAll()
+        public IList<DishOrderInfo> GetAll()
         {
             using (var context = new ApplicationContext())
             {
-                return context.Menus.ToList();
+                return context.DishOrderInfos.ToList();
             }
         }
 
-        public Menu GetById(int id)
+        public DishOrderInfo GetById(int id)
         {
             using (var context = new ApplicationContext())
             {
-                return context.Menus.FirstOrDefault(x => x.Id == id);
+                return context.DishOrderInfos.FirstOrDefault(x => x.Id == id);
             }
         }
 
@@ -59,14 +59,14 @@ namespace Cafe.Services.DBServices
         {
             using (var context = new ApplicationContext())
             {
-                var deleted = context.Menus.FirstOrDefault(x => x.Id == id);
+                var deleted = context.DishOrderInfos.FirstOrDefault(x => x.Id == id);
 
                 if (deleted == null)
                 {
                     return false;
                 }
 
-                var result = context.Menus.Remove(deleted).State;
+                var result = context.DishOrderInfos.Remove(deleted).State;
 
                 if (result != EntityState.Deleted)
                 {
@@ -86,7 +86,7 @@ namespace Cafe.Services.DBServices
             }
         }
 
-        public bool Update(Menu newEntity)
+        public bool Update(DishOrderInfo newEntity)
         {
             if (newEntity == null)
             {
@@ -94,7 +94,7 @@ namespace Cafe.Services.DBServices
             }
             using (var context = new ApplicationContext())
             {
-                var prevEntity = context.Menus.FirstOrDefault(x => x.Id == newEntity.Id);
+                var prevEntity = context.DishOrderInfos.FirstOrDefault(x => x.Id == newEntity.Id);
 
                 if (prevEntity == null)
                 {
@@ -102,7 +102,7 @@ namespace Cafe.Services.DBServices
                 }
 
                 prevEntity.DishId = newEntity.DishId;
-                prevEntity.DrinkId = newEntity.DrinkId;
+                prevEntity.OrderId = newEntity.OrderId;
 
                 try
                 {

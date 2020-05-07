@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace Cafe.Models.DBModels
 {
-    public class Menu
+    public class DishOrderInfo
     {
         public int Id { get; set; }
         [ForeignKey("Dish")]
         public int DishId { get; set; }
-        public Dish Dish { get; set; }
-        [ForeignKey("Drink")]
-        public int DrinkId { get; set; }
         public Drink Drink { get; set; }
+        [ForeignKey("Order")]
+        public int OrderId { get; set; }
+        public Order Order { get; set; }
     }
 }

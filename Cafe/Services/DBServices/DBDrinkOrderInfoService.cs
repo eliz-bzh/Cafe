@@ -1,16 +1,16 @@
-﻿using System;
+﻿using Cafe.Models.DBModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Cafe.Models;
-using Cafe.Models.DBModels;
 using Microsoft.EntityFrameworkCore;
 
 namespace Cafe.Services.DBServices
 {
-    public class DBOrderInfoService : IDBService<OrderInfo>
+    public class DBDrinkOrderInfoService : IDBService<DrinkOrderInfo>
     {
-        public bool Create(OrderInfo entity)
+        public bool Create(DrinkOrderInfo entity)
         {
             if (entity == null)
             {
@@ -39,19 +39,19 @@ namespace Cafe.Services.DBServices
             }
         }
 
-        public IList<OrderInfo> GetAll()
+        public IList<DrinkOrderInfo> GetAll()
         {
             using (var context = new ApplicationContext())
             {
-                return context.OrderInfos.ToList();
+                return context.DrinkOrderInfos.ToList();
             }
         }
 
-        public OrderInfo GetById(int id)
+        public DrinkOrderInfo GetById(int id)
         {
             using (var context = new ApplicationContext())
             {
-                return context.OrderInfos.FirstOrDefault(x => x.Id == id);
+                return context.DrinkOrderInfos.FirstOrDefault(x => x.Id == id);
             }
         }
 
@@ -59,14 +59,14 @@ namespace Cafe.Services.DBServices
         {
             using (var context = new ApplicationContext())
             {
-                var deleted = context.OrderInfos.FirstOrDefault(x => x.Id == id);
+                var deleted = context.DrinkOrderInfos.FirstOrDefault(x => x.Id == id);
 
                 if (deleted == null)
                 {
                     return false;
                 }
 
-                var result = context.OrderInfos.Remove(deleted).State;
+                var result = context.DrinkOrderInfos.Remove(deleted).State;
 
                 if (result != EntityState.Deleted)
                 {
@@ -86,7 +86,7 @@ namespace Cafe.Services.DBServices
             }
         }
 
-        public bool Update(OrderInfo newEntity)
+        public bool Update(DrinkOrderInfo newEntity)
         {
             if (newEntity == null)
             {
@@ -94,15 +94,15 @@ namespace Cafe.Services.DBServices
             }
             using (var context = new ApplicationContext())
             {
-                var prevEntity = context.OrderInfos.FirstOrDefault(x => x.Id == newEntity.Id);
+                var prevEntity = context.DrinkOrderInfos.FirstOrDefault(x => x.Id == newEntity.Id);
 
                 if (prevEntity == null)
                 {
                     return false;
                 }
 
-                prevEntity.IncludeDish = newEntity.IncludeDish;
-                prevEntity.IncludeDrink = newEntity.IncludeDrink;
+                prevEntity.DrinkId = newEntity.DrinkId;
+                prevEntity.OrderId = newEntity.OrderId;
 
                 try
                 {

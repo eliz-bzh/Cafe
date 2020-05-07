@@ -17,7 +17,7 @@ namespace Cafe.Models.DBModels
         public double MarkUp { get; set; }
         public double Price { get; set; }
 
-        public ICollection<Menu> Menus { get; set; }
-        public ICollection<OrderInfo> OrderInfos { get; set; }
+        
+        public ICollection<DrinkOrderInfo> DrinkOrderInfos { get; set; }
     }
 }

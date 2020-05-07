@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Cafe.Services.DBServices
 {
-    public class DBOrderInfoService: IDBService<OrderInfo>
+    public class DBOrderInfoService : IDBService<OrderInfo>
     {
         public bool Create(OrderInfo entity)
         {

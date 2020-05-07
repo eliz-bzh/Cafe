@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Cafe.Services.DBServices
 {
-    public class DBMenuService: IDBService<Menu>
+    public class DBMenuService : IDBService<Menu>
     {
         public bool Create(Menu entity)
         {
@@ -101,8 +101,8 @@ namespace Cafe.Services.DBServices
                     return false;
                 }
 
-                prevEntity.IdDish = newEntity.IdDish;
-                prevEntity.IdDrink = newEntity.IdDrink;
+                prevEntity.DishId = newEntity.DishId;
+                prevEntity.DrinkId = newEntity.DrinkId;
 
                 try
                 {

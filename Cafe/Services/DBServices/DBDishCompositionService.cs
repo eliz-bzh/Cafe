@@ -101,8 +101,9 @@ namespace Cafe.Services.DBServices
                 {
                     return false;
                 }
-                
-                prevEntity.IdIng = newEntity.IdIng;
+
+                prevEntity.DishId = newEntity.DishId;
+                prevEntity.IngredientId = newEntity.IngredientId;
                 prevEntity.Amount = newEntity.Amount;
 
                 try

@@ -102,7 +102,7 @@ namespace Cafe.Services.DBServices
                 }
 
                 prevEntity.Name = newEntity.Name;
-                prevEntity.Category = newEntity.Category;
+                prevEntity.CategoryId = newEntity.CategoryId;
                 prevEntity.Weight = newEntity.Weight;
                 prevEntity.FirstPrice = newEntity.FirstPrice;
                 prevEntity.MarkUp = newEntity.MarkUp;

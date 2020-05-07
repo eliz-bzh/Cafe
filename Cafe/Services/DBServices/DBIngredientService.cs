@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Cafe.Services.DBServices
 {
-    public class DBIngredientService: IDBService<Ingredient>
+    public class DBIngredientService : IDBService<Ingredient>
     {
         public bool Create(Ingredient entity)
         {
@@ -103,7 +103,7 @@ namespace Cafe.Services.DBServices
 
                 prevEntity.Name = newEntity.Name;
                 prevEntity.FirstPrice = newEntity.FirstPrice;
-                prevEntity.Unit = newEntity.Unit;
+                prevEntity.UnitId = newEntity.UnitId;
                 prevEntity.Weight = newEntity.Weight;
 
                 try

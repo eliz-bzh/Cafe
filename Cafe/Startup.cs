@@ -11,6 +11,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Cafe.Services.DBServices;
+using JavaScriptEngineSwitcher.V8;
+using JavaScriptEngineSwitcher.Extensions.MsDependencyInjection;
+using React.AspNet;
+using Microsoft.AspNetCore.Mvc.Cors.Internal;
 
 namespace Cafe
 {
@@ -22,6 +26,7 @@ namespace Cafe
         }
 
         public IConfiguration Configuration { get; }
+        
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -48,6 +53,17 @@ namespace Cafe
             services.AddSingleton(typeof(DBStockService));
             services.AddSingleton(typeof(DBUnitsService));
             services.AddSingleton(typeof(DBWaiterService));
+
+            //add Core react
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowMyOrigin",
+                builder => builder.WithOrigins("http://localhost:3000"));
+            });
+            services.Configure<MvcOptions>(options =>
+            {
+                options.Filters.Add(new CorsAuthorizationFilterFactory("AllowMyOrigin"));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -74,6 +90,9 @@ namespace Cafe
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            //use core react
+            app.UseCors("AllowMyOrigin");
         }
     }
 }

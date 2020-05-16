@@ -20,13 +20,15 @@ namespace Cafe.Controllers
         }
 
         [HttpGet("create")]
-        public bool Create([FromBody]Stock stock)
+        //[FromBody]
+        public bool Create(Stock stock)
         {
             return service.Create(stock);
         }
 
         [HttpGet("update")]
-        public bool Update([FromBody]Stock stock)
+        //[FromBody]
+        public bool Update(Stock stock)
         {
             return service.Update(stock);
         }

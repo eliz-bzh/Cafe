@@ -1,18 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
+using System.Web.Http.Cors;
 using Cafe.Models.DBModels;
 using Cafe.Services.DBServices;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Cafe.Controllers
 {
     [Route("api/[controller]")]
+    [ApiController]
     public class DishController : Controller
     {
-        private readonly DBDishService service;
+        public DBDishService service;
 
         public DishController(DBDishService service)
         {
@@ -20,13 +24,15 @@ namespace Cafe.Controllers
         }
 
         [HttpGet("create")]
-        public bool Create([FromBody]Dish dish)
+        //[FromBody]
+        public bool Create(Dish dish)
         {
             return service.Create(dish);
         }
 
         [HttpGet("edit")]
-        public bool Update([FromBody]Dish dish)
+        //[FromBody]
+        public bool Update(Dish dish)
         {
             return service.Update(dish);
         }

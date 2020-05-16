@@ -20,13 +20,15 @@ namespace Cafe.Controllers
         }
 
         [HttpGet("create")]
-        public bool Create([FromBody]Order order)
+        //[FromBody]
+        public bool Create(Order order)
         {
             return service.Create(order);
         }
 
         [HttpGet("edit")]
-        public bool Update([FromBody]Order order)
+        //[FromBody]
+        public bool Update(Order order)
         {
             return service.Update(order);
         }

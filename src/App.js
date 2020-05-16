@@ -5,6 +5,7 @@ import Dishes from './components/Dishes';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import Navigation from './components/Navigation';
 
+
 function App() {
   return (
     <BrowserRouter>
@@ -18,8 +19,9 @@ function App() {
           <Route path='/' component={Home} exact/>
           <Route path='/dishes' component={Dishes}/>
         </Switch>
-
-
+        
+        
+        
       </div>
     </BrowserRouter>
   );

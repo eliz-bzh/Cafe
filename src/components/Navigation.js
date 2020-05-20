@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {NavLink} from 'react-router-dom';
-import {Navbar, Nav} from 'react-bootstrap';
+import {Navbar, Nav, NavDropdown} from 'react-bootstrap';
 
 export default class Navigation extends Component{
 
@@ -13,9 +13,14 @@ export default class Navigation extends Component{
                         <NavLink className='d-inline p-2 bg-dark text-white' to='/'>
                             Home
                         </NavLink>
-                        <NavLink className='d-inline p-2 bg-dark text-white' to='/dishes'>
-                            Dishes
+                        <NavLink className='d-inline p-2 bg-dark text-white' to='/categories'>
+                            Category
                         </NavLink>
+                        <NavDropdown className="bg-dark text-white" title="Menu">
+                            <NavDropdown.Item href='/menu/dishes'>Dishes</NavDropdown.Item>
+                            <NavDropdown.Divider />
+                            <NavDropdown.Item href='/menu/drinks'>Drinks</NavDropdown.Item>
+                        </NavDropdown>
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>

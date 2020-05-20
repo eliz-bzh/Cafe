@@ -6,14 +6,14 @@ import EditDishModal from './EditDishModal';
 import AddIcon from '@material-ui/icons/Add';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
-import {Add, Edit, Delete} from '@material-ui/icons';
-import IconButton from "@material-ui/core/IconButton";
+import axios from 'axios';
 
 export default class Dishes extends Component{
 
     constructor(props){
         super(props);
-        this.state = {dishes: [], addModalShow: false, editModalShow: false};
+        this.state = {dishes: [], 
+             addModalShow: false, editModalShow: false};
     }
 
     componentDidMount(){
@@ -22,21 +22,20 @@ export default class Dishes extends Component{
 
     deleteDish(dishId){
         if(window.confirm('Are you sure?')){
-            fetch(`https://localhost:44399/api/Category/delete/${dishId}`)
-            .then((result)=>{
-                this.setState({snackBaropen: true, snackBarMessage: 'Deleted successfully'});
-            },
-            (error)=>{
-                this.setState({snackBaropen: true, snackBarMessage: 'Failed deleted'});
+            fetch('https://localhost:44385/api/Dish/'+dishId,{
+                method:'DELETE',
+                header:{
+                    'Accept':'application/json',
+                    'Content-Type':'application/json'
+                }
             })
         }
     }
 
     refreshList(){
-        fetch('https://localhost:44399/api/Category/getAll')
-        .then(res=> res.json())
-        .then(data=> {
-            this.setState({dishes: data});
+        axios.get(`https://localhost:44399/api/Dish/getAll`)
+        .then(res=> {
+            this.setState({dishes: res.data})
         });
     }
 
@@ -45,16 +44,21 @@ export default class Dishes extends Component{
     }
 
     render(){
-        const {dishes, dishId, dishName} = this.state;
+        const {dishes, dishId, dishName, dishCat, dishWeight, dishFP, dishMU, dishPrice} = this.state;
         const addModalClose=()=>this.setState({addModalShow:false});
         const editModalClose=()=>this.setState({editModalShow:false});
         return(
             <div>
-            <Table className='mt-4' size='sm'>
+                <Table className='mt-4' size='sm'>
                 <thead>
                     <tr>
-                        <th>DishId</th>
-                        <th>DishName</th>
+                        <th>Dish number</th>
+                        <th>Dish name</th>
+                        <th>Dish category</th>
+                        <th>Dish weight</th>
+                        <th>Dish first price</th>
+                        <th>Dish mark up</th>
+                        <th>Dish price</th>
                         <th>Options</th>
                     </tr>
                 </thead>
@@ -63,16 +67,26 @@ export default class Dishes extends Component{
                         <tr key={dish.id}>
                             <td>{dish.id}</td>
                             <td>{dish.name}</td>
+                            <td>{dish.category}</td>
+                            <td>{dish.weight}</td>
+                            <td>{dish.firstPrice}</td>
+                            <td>{dish.markUp}</td>
+                            <td>{dish.price}</td>
                             <td>
                             <ButtonToolbar>
                                 <Button 
                                 variant="success" 
                                 onClick={()=>this.setState({
                                     editModalShow: true, 
-                                    dishId: dish.id, 
-                                    dishName: dish.name
+                                    dishId: dish.id,
+                                    dishName: dish.name,
+                                    dishCat: dish.category,
+                                    dishWeight: dish.weight,
+                                    dishFP: dish.firstPrice,
+                                    dishMU: dish.markUp,
+                                    dishPrice: dish.price
                                     })}>
-                                {<EditIcon fontSize="medium"/>}
+                                {<EditIcon/>}
                                 </Button>
 
                                 <div className="mr-2"></div>
@@ -80,14 +94,20 @@ export default class Dishes extends Component{
                                 <Button className="mr-2"
                                 variant="secondary" 
                                 onClick={()=>this.deleteDish(dish.id)}>
-                                {<DeleteIcon fontSize="medium"/>}
+                                {<DeleteIcon/>}
                                 </Button>
 
                                 <EditDishModal
                                 show={this.state.editModalShow}
                                 onHide={editModalClose}
                                 dishId={dishId}
-                                dishName={dishName}/>
+                                dishName={dishName}
+                                dishCat={dishCat}
+                                dishWeight={dishWeight}
+                                dishFP={dishFP}
+                                dishMU={dishMU}
+                                dishPrice={dishPrice}
+                                />
 
                             </ButtonToolbar>
                             </td>
@@ -100,8 +120,8 @@ export default class Dishes extends Component{
                 <Button 
                 variant="danger" 
                 onClick={()=>this.setState({addModalShow: true})}>
-                    {<Add fontSize="medium"/>}
-                    Add Dish
+                    {<AddIcon/>}
+                    Add dish
                 </Button>
 
                 <AddDishModal

@@ -3,8 +3,10 @@ import {Modal, Row, Col, Form} from 'react-bootstrap';
 import {Button} from 'react-bootstrap';
 import SnackBar from '@material-ui/core/Snackbar';
 import IconButton from "@material-ui/core/IconButton";
+import axios from 'axios';
+import qs from 'querystring';
 
-export default class AddDishModal extends Component{
+export default class EditCatModal extends Component{
 
     constructor(props){
         super(props);
@@ -16,28 +18,34 @@ export default class AddDishModal extends Component{
         this.setState({snackBaropen: false});
     }
 
-    handleSubmit(event){
+    handleSubmit=(event)=>{
         event.preventDefault();
-        fetch(`https://localhost:44399/api/Category/create?Name=${event.target.name.value}`)
-        .then((result)=>{
-            this.setState({snackBaropen: true, snackBarMessage: 'Added successfully'});
-        },
-        (error)=>{
-            this.setState({snackBaropen: true, snackBarMessage: 'Failed added'});
+        
+        axios.put(`https://localhost:44399/api/Category/update?${qs.stringify({
+            Id: event.target.id.value,
+            Name: event.target.name.value
+        })}`)
+        .then(res=> {
+            console.log(res.data);
+            this.setState({snackBaropen: true, snackBarMessage: 'Updated successfully'});
         })
+        .catch(error=> {
+            console.log(error);
+            this.setState({snackBaropen: true, snackBarMessage: 'Failed to update'});
+        });
     }
 
     render(){
         return(
             <div className='container'>
                 <SnackBar
-                anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+                anchorOrigin={{vertical: 'bottom', horizontal: 'center'}}
                 open={this.state.snackBaropen}
                 autoHideDuration={1000}
                 onClose={this.snackBarClose}
         message={<span id='message-id'>{this.state.snackBarMessage}</span>}
         action={[
-            <IconButton key='close' aria-label="close" color='inherit'
+            <IconButton key='close' arial-label='Close' color='white'
             onClick={this.snackBarClose}></IconButton>
         ]}/>
             <Modal
@@ -48,24 +56,35 @@ export default class AddDishModal extends Component{
     >
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-          Adding dish in menu
+          Editing category
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
               <Row>
                   <Col sm={6}>
                       <Form onSubmit={this.handleSubmit}>
+                      <Form.Group controlId="id">
+                              <Form.Label>Category number</Form.Label>
+                              <Form.Control 
+                                type="text"
+                                name="id"
+                                required
+                                disabled
+                                defaultValue={this.props.catId}
+                                placeholder="Category number"/>
+                          </Form.Group>
                           <Form.Group controlId="name">
-                              <Form.Label>Dish Name</Form.Label>
+                              <Form.Label>Category name</Form.Label>
                               <Form.Control 
                                 type="text"
                                 name="name"
                                 required
-                                placeholder="Dish name"/>
+                                //defaultValue={this.props.catName}
+                                placeholder="Category name"/>
                           </Form.Group>
                           <Form.Group>
                             <Button variant="primary" type="submit">
-                                Add dish
+                                Edit category
                             </Button>
                           </Form.Group>
                       </Form>

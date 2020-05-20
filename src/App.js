@@ -1,7 +1,9 @@
 import React from 'react';
 import './App.css';
 import Home from './components/Home';
-import Dishes from './components/Dishes';
+import Categories from './components/Category/Categories';
+import Dishes from './components/Dish/Dishes';
+import Drinks from './components/Drink/Drinks';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import Navigation from './components/Navigation';
 
@@ -17,9 +19,10 @@ function App() {
 
         <Switch>
           <Route path='/' component={Home} exact/>
-          <Route path='/dishes' component={Dishes}/>
+          <Route path='/categories' component={Categories}/>
+          <Route path='/menu/dishes' component={Dishes}/>
+          <Route path='/menu/drinks' component={Drinks}/>
         </Switch>
-        
         
         
       </div>
@@ -28,3 +31,11 @@ function App() {
 }
 
 export default App;
+/*
+<Switch>
+          <Route path='/' component={Home} exact/>
+          <Route path='/categories' component={Categories}/>
+          <Route path='/dishes' component={Dishes}/>
+          <Route path='/drinks' component={Drinks}/>
+        </Switch>
+*/

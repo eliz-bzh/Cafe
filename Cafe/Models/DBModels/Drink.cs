@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -13,11 +14,12 @@ namespace Cafe.Models.DBModels
         [ForeignKey("Category")]
         public int CategoryId { get; set; }
         public Category Category { get; set; }
+        public double Volume { get; set; }
         public double FirstPrice { get; set; }
         public double MarkUp { get; set; }
         public double Price { get; set; }
 
-        
+        [JsonIgnore]
         public ICollection<DrinkOrderInfo> DrinkOrderInfos { get; set; }
     }
 }

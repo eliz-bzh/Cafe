@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ namespace Cafe.Models.DBModels
         public string Surname { get; set; }
         public string Patronymic { get; set; }
 
+        [JsonIgnore]
         public ICollection<Order> Orders { get; set; }
     }
 }

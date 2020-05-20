@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -16,7 +17,9 @@ namespace Cafe.Models.DBModels
         public Units Units { get; set; }
         public double FirstPrice { get; set; }
 
+        [JsonIgnore]
         public ICollection<DishComposition> DishCompositions { get; set; }
+        [JsonIgnore]
         public ICollection<Stock> Stocks { get; set; }
     }
 }

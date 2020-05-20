@@ -19,16 +19,14 @@ namespace Cafe.Controllers
             this.service = service;
         }
 
-        [HttpGet("create")]
-        //[FromBody]
+        [HttpPost("create")]
         public bool Create(Category category)
         {
             return service.Create(category);
         }
 
-        [HttpGet("update")]
-        //[FromBody]
-        public bool Update(Category category)
+        [HttpPut("update")]
+        public bool Update([FromBody]Category category)
         {
             return service.Update(category);
         }
@@ -39,7 +37,7 @@ namespace Cafe.Controllers
             return service.GetById(id);
         }
 
-        [HttpGet("delete/{id}")]
+        [HttpDelete("delete/{id}")]
         public bool Delete(int id)
         {
             return service.Remove(id);

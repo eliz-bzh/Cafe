@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Cafe.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20200507193034_fistMigration")]
-    partial class fistMigration
+    [Migration("20200516225201_firstMigration")]
+    partial class firstMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

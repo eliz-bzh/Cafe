@@ -19,7 +19,7 @@ namespace Cafe.Controllers
             this.service = service;
         }
 
-        [HttpGet("create")]
+        [HttpPost("create")]
         //[FromBody]
         public bool Create(Drink drink)
         {

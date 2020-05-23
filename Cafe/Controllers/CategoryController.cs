@@ -4,12 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using Cafe.Models.DBModels;
 using Cafe.Services.DBServices;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Cafe.Controllers
 {
     [Route("api/[controller]")]
+    [EnableCors("AllowMyOrigin")]
     public class CategoryController : Controller
     {
         private readonly DBCategoryService service;
@@ -26,7 +28,8 @@ namespace Cafe.Controllers
         }
 
         [HttpPut("update")]
-        public bool Update([FromBody]Category category)
+        //[FromBody]
+        public bool Update(Category category)
         {
             return service.Update(category);
         }

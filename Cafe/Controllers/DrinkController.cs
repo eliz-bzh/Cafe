@@ -4,12 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using Cafe.Models.DBModels;
 using Cafe.Services.DBServices;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Cafe.Controllers
 {
     [Route("api/[controller]")]
+    [EnableCors("AllowMyOrigin")]
     public class DrinkController : Controller
     {
         private readonly DBDrinkService service;
@@ -26,7 +28,7 @@ namespace Cafe.Controllers
             return service.Create(drink);
         }
 
-        [HttpGet("edit")]
+        [HttpPut("update")]
         //[FromBody]
         public bool Update(Drink drink)
         {
@@ -39,7 +41,7 @@ namespace Cafe.Controllers
             return service.GetById(id);
         }
 
-        [HttpGet("delete/{id}")]
+        [HttpDelete("delete/{id}")]
         public bool Delete(int id)
         {
             return service.Remove(id);

@@ -12,7 +12,7 @@ export default class Dishes extends Component{
 
     constructor(props){
         super(props);
-        this.state = {dishes: [], 
+        this.state = {dishes: [], categories: [],
              addModalShow: false, editModalShow: false};
     }
 
@@ -20,15 +20,20 @@ export default class Dishes extends Component{
         this.refreshList();
     }
 
+    componentWillUnmount(){
+        this.setState({dishes: [], categories: [], 
+            addModalClose: false, editModalShow: false});
+    }
+
     deleteDish(dishId){
         if(window.confirm('Are you sure?')){
-            fetch('https://localhost:44385/api/Dish/'+dishId,{
-                method:'DELETE',
-                header:{
-                    'Accept':'application/json',
-                    'Content-Type':'application/json'
-                }
+            axios.delete(`https://localhost:44399/api/Dish/delete/${dishId}`)
+            .then(res=> {
+                console.log(res.data);
             })
+            .catch(error=> {
+                console.log(error);
+            });
         }
     }
 
@@ -54,7 +59,7 @@ export default class Dishes extends Component{
                     <tr>
                         <th>Dish number</th>
                         <th>Dish name</th>
-                        <th>Dish category</th>
+                        <th>Dish category Id</th>
                         <th>Dish weight</th>
                         <th>Dish first price</th>
                         <th>Dish mark up</th>
@@ -67,7 +72,7 @@ export default class Dishes extends Component{
                         <tr key={dish.id}>
                             <td>{dish.id}</td>
                             <td>{dish.name}</td>
-                            <td>{dish.category}</td>
+                            <td>{dish.categoryId}</td>
                             <td>{dish.weight}</td>
                             <td>{dish.firstPrice}</td>
                             <td>{dish.markUp}</td>
@@ -80,7 +85,7 @@ export default class Dishes extends Component{
                                     editModalShow: true, 
                                     dishId: dish.id,
                                     dishName: dish.name,
-                                    dishCat: dish.category,
+                                    dishCat: dish.categoryId,
                                     dishWeight: dish.weight,
                                     dishFP: dish.firstPrice,
                                     dishMU: dish.markUp,
@@ -100,13 +105,13 @@ export default class Dishes extends Component{
                                 <EditDishModal
                                 show={this.state.editModalShow}
                                 onHide={editModalClose}
-                                dishId={dishId}
-                                dishName={dishName}
-                                dishCat={dishCat}
-                                dishWeight={dishWeight}
-                                dishFP={dishFP}
-                                dishMU={dishMU}
-                                dishPrice={dishPrice}
+                                dishid={dishId}
+                                dishname={dishName}
+                                dishcat={dishCat}
+                                dishweight={dishWeight}
+                                dishfp={dishFP}
+                                dishmu={dishMU}
+                                dishprice={dishPrice}
                                 />
 
                             </ButtonToolbar>

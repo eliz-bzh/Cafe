@@ -6,20 +6,12 @@ import IconButton from "@material-ui/core/IconButton";
 import axios from 'axios';
 import qs from 'querystring';
 
-export default class AddDrinkModal extends Component{
+export default class AddWaiterModal extends Component{
 
     constructor(props){
         super(props);
-        this.state = {categories:[], snackBaropen: false, snackBarMessage: ''};
+        this.state = {snackBaropen: false, snackBarMessage: ''};
         this.handleSubmit = this.handleSubmit.bind(this);
-    }
-
-    componentDidMount(){
-        fetch('https://localhost:44399/api/Category/getAll')
-        .then(res=> res.json())
-        .then(data=>{
-            this.setState({categories: data});
-        })
     }
 
     snackBarClose=(event)=>{
@@ -28,13 +20,10 @@ export default class AddDrinkModal extends Component{
 
     handleSubmit=(event)=>{
         event.preventDefault();
-        axios.post(`https://localhost:44399/api/Drink/create?${qs.stringify({
+        axios.post(`https://localhost:44399/api/Waiter/create?${qs.stringify({
             Name: event.target.name.value,
-            CategoryId: event.target.category.value,
-            Volume: event.target.volume.value,
-            FirstPrice: event.target.firstPrice.value,
-            MarkUp: event.target.markUp.value,
-            Price: event.target.price.value
+            Surname: event.target.surname.value,
+            Patronymic: event.target.patronymic.value
         })}`)
         .then(res=> {
             console.log(res.data);
@@ -67,7 +56,7 @@ export default class AddDrinkModal extends Component{
                     centered>
                     <Modal.Header closeButton>
                         <Modal.Title id="contained-modal-title-vcenter">
-                            Adding drink
+                            Adding waiter
                         </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
@@ -75,56 +64,32 @@ export default class AddDrinkModal extends Component{
                             <Col sm={6}>
                                 <Form onSubmit={this.handleSubmit}>
                                     <Form.Group controlId="name">
-                                        <Form.Label>Drink name</Form.Label>
+                                        <Form.Label>Waiter name</Form.Label>
                                         <Form.Control 
                                         type="text"
                                         name="name"
                                         required
-                                        placeholder="Drink name"/>
+                                        placeholder="Waiter name"/>
                                     </Form.Group>
-                                    <Form.Group controlId="category">
-                                        <Form.Label>Drink category</Form.Label>
-                                        <Form.Control as="select">
-                                            {this.state.categories.map(cat=>
-                                                <option key={cat.id}>{cat.id}</option>
-                                            )}
-                                        </Form.Control>
-                                    </Form.Group>
-                                    <Form.Group controlId="volume">
-                                        <Form.Label>Drink volume</Form.Label>
+                                    <Form.Group controlId="surname">
+                                        <Form.Label>Waiter surname</Form.Label>
                                         <Form.Control 
                                         type="text"
-                                        name="volume"
+                                        name="surname"
                                         required
-                                        placeholder="Drink volume"/>
+                                        placeholder="Waiter surname"/>
                                     </Form.Group>
-                                    <Form.Group controlId="firstPrice">
-                                        <Form.Label>Drink first price</Form.Label>
+                                    <Form.Group controlId="patronymic">
+                                        <Form.Label>Waiter patronymic</Form.Label>
                                         <Form.Control 
                                         type="text"
-                                        name="firstPrice"
+                                        name="patronymic"
                                         required
-                                        placeholder="Drink first price"/>
-                                    </Form.Group>
-                                    <Form.Group controlId="markUp">
-                                        <Form.Label>Drink mark up</Form.Label>
-                                        <Form.Control 
-                                        type="text"
-                                        name="markUp"
-                                        required
-                                        placeholder="Drink mark up"/>
-                                    </Form.Group>
-                                    <Form.Group controlId="price">
-                                        <Form.Label>Drink price</Form.Label>
-                                        <Form.Control 
-                                        type="text"
-                                        name="price"
-                                        required
-                                        placeholder="Drink price"/>
+                                        placeholder="Waiter patronymic"/>
                                     </Form.Group>
                                     <Form.Group>
                                         <Button variant="primary" type="submit">
-                                            Add drink
+                                            Add waiter
                                         </Button>
                                     </Form.Group>
                                 </Form>

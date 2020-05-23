@@ -6,6 +6,7 @@ import Dishes from './components/Dish/Dishes';
 import Drinks from './components/Drink/Drinks';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import Navigation from './components/Navigation';
+import Waiters from './components/Waiter/Waiters';
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
           <Route path='/categories' component={Categories}/>
           <Route path='/menu/dishes' component={Dishes}/>
           <Route path='/menu/drinks' component={Drinks}/>
+          <Route path='/waiters' component={Waiters}/>
         </Switch>
         
         

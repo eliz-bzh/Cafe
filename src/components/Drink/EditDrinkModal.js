@@ -28,39 +28,22 @@ export default class EditDrinkModal extends Component{
 
     handleSubmit(event){
         event.preventDefault();
-        /*fetch('https://localhost:44385/api/Drink',{
-            method:'PUT',
-            headers:{
-                'Accept':'application/json',
-                'Content-Type':'application/json'
-            },
-            body:JSON.stringify({
-                id:event.target.id.value,
-                name:event.target.name.value,
-                category:event.target.category.value,
-                volume:event.target.volume.value,
-                firstPrice:event.target.firstPrice.value,
-                markUp:event.target.markUp.value,
-                price:event.target.price.value
-            })
-        })
-        .then(res=> res.json())
-        .then((result)=>{
-            this.setState({snackBaropen: true, snackBarMessage: 'Updated successfully'});
-        },
-        (error)=>{
-            this.setState({snackBaropen: true, snackBarMessage: 'Failed to update'});
-        })*/
         axios.put(`https://localhost:44399/api/Drink/update?${qs.stringify({
             Id: event.target.id.value,
-            Name: event.target.name.value
+            Name: event.target.name.value,
+            CategoryId: event.target.category.value,
+            Volume: event.target.volume.value,
+            FirstPrice: event.target.firstPrice.value,
+            MarkUp: event.target.markUp.value,
+            Price: event.target.price.value
         })}`)
         .then(res=> {
-            this.setState({snackBaropen: true, snackBarMessage: 'Added successfully'});
+            console.log(res.data);
+            this.setState({snackBaropen: true, snackBarMessage: 'Updated successfully'});
         })
         .catch(error=> {
             console.log(error);
-            this.setState({snackBaropen: true, snackBarMessage: 'Failed added'});
+            this.setState({snackBaropen: true, snackBarMessage: 'Failed to update'});
         });
     }
 
@@ -74,7 +57,7 @@ export default class EditDrinkModal extends Component{
                 onClose={this.snackBarClose}
                 message={<span id='message-id'>{this.state.snackBarMessage}</span>}
                 action={[
-                    <IconButton key='close' arial-label='Close' color='white'
+                    <IconButton key='close' arial-label='Close' color='inherit'
                         onClick={this.snackBarClose}></IconButton>
                 ]}/>
 
@@ -99,7 +82,7 @@ export default class EditDrinkModal extends Component{
                                             name="id"
                                             required
                                             disabled
-                                            defaultValue={this.props.drinkId}
+                                            defaultValue={this.props.drinkid}
                                             placeholder="Drink number"/>
                                     </Form.Group>
                                     <Form.Group controlId="name">
@@ -108,15 +91,15 @@ export default class EditDrinkModal extends Component{
                                             type="text"
                                             name="name"
                                             required
-                                            defaultValue={this.props.drinkName}
+                                            defaultValue={this.props.drinkname}
                                             placeholder="Drink name"/>
                                     </Form.Group>
                                     <Form.Group controlId="category">
                                         <Form.Label>Drink category</Form.Label>
                                         <Form.Control as="select"
-                                            defaultValue={this.props.drinkCat}>
+                                            defaultValue={this.props.drinkcat}>
                                             {this.state.categories.map(cat=>
-                                                <option key={cat.id}>{cat.name}</option>
+                                                <option key={cat.id}>{cat.id}</option>
                                             )}
                                         </Form.Control>
                                     </Form.Group>
@@ -126,7 +109,7 @@ export default class EditDrinkModal extends Component{
                                             type="text"
                                             name="volume"
                                             required
-                                            defaultValue={this.props.drinkVolume}
+                                            defaultValue={this.props.drinkvolume}
                                             placeholder="Drink volume"/>
                                     </Form.Group>
                                     <Form.Group controlId="firstPrice">
@@ -135,7 +118,7 @@ export default class EditDrinkModal extends Component{
                                             type="text"
                                             name="firstPrice"
                                             required
-                                            defaultValue={this.props.drinkFP}
+                                            defaultValue={this.props.drinkfp}
                                             placeholder="Drink first price"/>
                                     </Form.Group>
                                     <Form.Group controlId="markUp">
@@ -144,7 +127,7 @@ export default class EditDrinkModal extends Component{
                                             type="text"
                                             name="markUp"
                                             required
-                                            defaultValue={this.props.drinkMU}
+                                            defaultValue={this.props.drinkmu}
                                             placeholder="Drink mark up"/>
                                     </Form.Group>
                                     <Form.Group controlId="price">
@@ -153,7 +136,7 @@ export default class EditDrinkModal extends Component{
                                             type="text"
                                             name="price"
                                             required
-                                            defaultValue={this.props.drinkPrice}
+                                            defaultValue={this.props.drinkprice}
                                             placeholder="Drink price"/>
                                     </Form.Group>
                                     <Form.Group>

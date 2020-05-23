@@ -19,15 +19,20 @@ export default class Dishes extends Component{
         this.refreshList();
     }
 
-    deleteDish(drinkId){
+    componentWillUnmount(){
+        this.setState({drinks: [], categories: [], 
+            addModalClose: false, editModalShow: false});
+    }
+
+    deleteDrink(drinkId){
         if(window.confirm('Are you sure?')){
-            fetch('https://localhost:44385/api/Drink/'+drinkId,{
-                method:'DELETE',
-                header:{
-                    'Accept':'application/json',
-                    'Content-Type':'application/json'
-                }
+            axios.delete(`https://localhost:44399/api/Drink/delete/${drinkId}`)
+            .then(res=> {
+                console.log(res.data);
             })
+            .catch(error=> {
+                console.log(error);
+            });
         }
     }
 
@@ -66,7 +71,7 @@ export default class Dishes extends Component{
                         <tr key={drink.id}>
                             <td>{drink.id}</td>
                             <td>{drink.name}</td>
-                            <td>{drink.category}</td>
+                            <td>{drink.categoryId}</td>
                             <td>{drink.volume}</td>
                             <td>{drink.firstPrice}</td>
                             <td>{drink.markUp}</td>
@@ -92,20 +97,20 @@ export default class Dishes extends Component{
 
                                 <Button className="mr-2"
                                 variant="secondary" 
-                                onClick={()=>this.deleteDish(drink.id)}>
+                                onClick={()=>this.deleteDrink(drink.id)}>
                                 {<DeleteIcon/>}
                                 </Button>
 
                                 <EditDrinkModal
                                 show={this.state.editModalShow}
                                 onHide={editModalClose}
-                                drinkId={drinkId}
-                                drinkName={drinkName}
-                                drinkCat={drinkCat}
-                                drinkVolume={drinkVolume}
-                                drinkFP={drinkFP}
-                                drinkMU={drinkMU}
-                                drinkPrice={drinkPrice}
+                                drinkid={drinkId}
+                                drinkname={drinkName}
+                                drinkcat={drinkCat}
+                                drinkvolume={drinkVolume}
+                                drinkfp={drinkFP}
+                                drinkmu={drinkMU}
+                                drinkprice={drinkPrice}
                                 />
 
                             </ButtonToolbar>

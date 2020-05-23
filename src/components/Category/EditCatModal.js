@@ -45,7 +45,7 @@ export default class EditCatModal extends Component{
                 onClose={this.snackBarClose}
         message={<span id='message-id'>{this.state.snackBarMessage}</span>}
         action={[
-            <IconButton key='close' arial-label='Close' color='white'
+            <IconButton key='close' arial-label='Close' color='inherit'
             onClick={this.snackBarClose}></IconButton>
         ]}/>
             <Modal
@@ -70,7 +70,7 @@ export default class EditCatModal extends Component{
                                 name="id"
                                 required
                                 disabled
-                                defaultValue={this.props.catId}
+                                defaultValue={this.props.catid}
                                 placeholder="Category number"/>
                           </Form.Group>
                           <Form.Group controlId="name">
@@ -79,7 +79,7 @@ export default class EditCatModal extends Component{
                                 type="text"
                                 name="name"
                                 required
-                                //defaultValue={this.props.catName}
+                                defaultValue={this.props.catname}
                                 placeholder="Category name"/>
                           </Form.Group>
                           <Form.Group>

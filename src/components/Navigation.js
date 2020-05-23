@@ -13,10 +13,13 @@ export default class Navigation extends Component{
                         <NavLink className='d-inline p-2 bg-dark text-white' to='/'>
                             Home
                         </NavLink>
+                        <NavLink className='d-inline p-2 bg-dark text-white' to='/waiters'>
+                            List of waiters
+                        </NavLink>
                         <NavLink className='d-inline p-2 bg-dark text-white' to='/categories'>
                             Category
                         </NavLink>
-                        <NavDropdown className="bg-dark text-white" title="Menu">
+                        <NavDropdown title="Menu">
                             <NavDropdown.Item href='/menu/dishes'>Dishes</NavDropdown.Item>
                             <NavDropdown.Divider />
                             <NavDropdown.Item href='/menu/drinks'>Drinks</NavDropdown.Item>

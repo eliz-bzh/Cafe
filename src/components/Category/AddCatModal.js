@@ -25,6 +25,7 @@ export default class AddCatModal extends Component{
             Name: event.target.name.value
         })}`)
         .then(res=> {
+            console.log(res.data);
             this.setState({snackBaropen: true, snackBarMessage: 'Added successfully'});
         })
         .catch(error=> {

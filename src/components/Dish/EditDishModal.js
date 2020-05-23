@@ -3,6 +3,8 @@ import {Modal, Row, Col, Form} from 'react-bootstrap';
 import {Button} from 'react-bootstrap';
 import SnackBar from '@material-ui/core/Snackbar';
 import IconButton from "@material-ui/core/IconButton";
+import axios from 'axios';
+import qs from 'querystring';
 
 export default class EditDishModal extends Component{
 
@@ -26,29 +28,23 @@ export default class EditDishModal extends Component{
 
     handleSubmit(event){
         event.preventDefault();
-        fetch('https://localhost:44399/api/Dish',{
-            method:'PUT',
-            headers:{
-                'Accept':'application/json',
-                'Content-Type':'application/json'
-            },
-            body:JSON.stringify({
-                id:event.target.id.value,
-                name:event.target.name.value,
-                category:event.target.category.value,
-                weight:event.target.weight.value,
-                firstPrice:event.target.firstPrice.value,
-                markUp:event.target.markUp.value,
-                price:event.target.price.value
-            })
-        })
-        .then(res=> res.json())
-        .then((result)=>{
+        axios.put(`https://localhost:44399/api/Dish/update?${qs.stringify({
+            Id: event.target.id.value,
+            Name: event.target.name.value,
+            CategoryId: event.target.category.value,
+            Weight: event.target.weight.value,
+            FirstPrice: event.target.firstPrice.value,
+            MarkUp: event.target.markUp.value,
+            Price: event.target.price.value
+        })}`)
+        .then(res=> {
+            console.log(res.data);
             this.setState({snackBaropen: true, snackBarMessage: 'Updated successfully'});
-        },
-        (error)=>{
-            this.setState({snackBaropen: true, snackBarMessage: 'Failed to update'});
         })
+        .catch(error=> {
+            console.log(error);
+            this.setState({snackBaropen: true, snackBarMessage: 'Failed to update'});
+        });
     }
 
     render(){
@@ -61,7 +57,7 @@ export default class EditDishModal extends Component{
                 onClose={this.snackBarClose}
                 message={<span id='message-id'>{this.state.snackBarMessage}</span>}
                 action={[
-                    <IconButton key='close' arial-label='Close' color='white'
+                    <IconButton key='close' arial-label='Close' color='inherit'
                         onClick={this.snackBarClose}></IconButton>
                 ]}/>
 
@@ -86,7 +82,7 @@ export default class EditDishModal extends Component{
                                             name="id"
                                             required
                                             disabled
-                                            defaultValue={this.props.dishId}
+                                            defaultValue={this.props.dishid}
                                             placeholder="Dish number"/>
                                     </Form.Group>
                                     <Form.Group controlId="name">
@@ -95,15 +91,15 @@ export default class EditDishModal extends Component{
                                             type="text"
                                             name="name"
                                             required
-                                            defaultValue={this.props.dishName}
+                                            defaultValue={this.props.dishname}
                                             placeholder="Dish name"/>
                                     </Form.Group>
                                     <Form.Group controlId="category">
                                         <Form.Label>Dish category</Form.Label>
                                         <Form.Control as="select"
-                                            defaultValue={this.props.dishCat}>
+                                            defaultValue={this.props.dishcat}>
                                             {this.state.categories.map(cat=>
-                                                <option key={cat.id}>{cat.name}</option>
+                                                <option key={cat.id}>{cat.id}</option>
                                             )}
                                         </Form.Control>
                                     </Form.Group>
@@ -113,7 +109,7 @@ export default class EditDishModal extends Component{
                                             type="text"
                                             name="weight"
                                             required
-                                            defaultValue={this.props.dishWeight}
+                                            defaultValue={this.props.dishweight}
                                             placeholder="Dish weight"/>
                                     </Form.Group>
                                     <Form.Group controlId="firstPrice">
@@ -122,7 +118,7 @@ export default class EditDishModal extends Component{
                                             type="text"
                                             name="firstPrice"
                                             required
-                                            defaultValue={this.props.dishFP}
+                                            defaultValue={this.props.dishfp}
                                             placeholder="Dish first price"/>
                                     </Form.Group>
                                     <Form.Group controlId="markUp">
@@ -131,7 +127,7 @@ export default class EditDishModal extends Component{
                                             type="text"
                                             name="markUp"
                                             required
-                                            defaultValue={this.props.dishMU}
+                                            defaultValue={this.props.dishmu}
                                             placeholder="Dish mark up"/>
                                     </Form.Group>
                                     <Form.Group controlId="price">
@@ -140,7 +136,7 @@ export default class EditDishModal extends Component{
                                             type="text"
                                             name="price"
                                             required
-                                            defaultValue={this.props.dishPrice}
+                                            defaultValue={this.props.dishprice}
                                             placeholder="Dish price"/>
                                     </Form.Group>
                                     <Form.Group>

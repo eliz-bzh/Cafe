@@ -28,16 +28,17 @@ export default class AddDishModal extends Component{
 
     handleSubmit=(event)=>{
         event.preventDefault();
-
         axios.post(`https://localhost:44399/api/Dish/create?${qs.stringify({
             Name: event.target.name.value,
             CategoryId: event.target.category.value,
+            Category: event.target.category2.value,
             Weight: event.target.weight.value,
             FirstPrice: event.target.firstPrice.value,
             MarkUp: event.target.markUp.value,
             Price: event.target.price.value
         })}`)
         .then(res=> {
+            console.log(res.data);
             this.setState({snackBaropen: true, snackBarMessage: 'Added successfully'});
         })
         .catch(error=> {
@@ -87,6 +88,14 @@ export default class AddDishModal extends Component{
                                         <Form.Control as="select">
                                             {this.state.categories.map(cat=>
                                                 <option key={cat.id}>{cat.id}</option>
+                                            )}
+                                        </Form.Control>
+                                    </Form.Group>
+                                    <Form.Group controlId="category2">
+                                        <Form.Label>Dish category</Form.Label>
+                                        <Form.Control as="select">
+                                            {this.state.categories.map(cat=>
+                                                <option key={cat.id}>{cat.name}</option>
                                             )}
                                         </Form.Control>
                                     </Form.Group>

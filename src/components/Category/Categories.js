@@ -19,20 +19,20 @@ export default class Categories extends Component{
         this.refreshList();
     }
 
-    deletecat(catId){
+    componentWillUnmount(){
+        this.setState({categories: [], 
+            addModalClose: false, editModalShow: false});
+    }
+
+    deleteCat(catId){
         if(window.confirm('Are you sure?')){
-            /*fetch('https://localhost:44385/api/Category/'+catId,{
-                method:'DELETE',
-                header:{
-                    'Accept':'application/json',
-                    'Content-Type':'application/json'
-                }
-            })*/
             axios.delete(`https://localhost:44399/api/Category/delete/${catId}`)
             .then(res=> {
-                console.log(res);
                 console.log(res.data);
             })
+            .catch(error=> {
+                console.log(error);
+            });
         }
     }
 
@@ -82,15 +82,15 @@ export default class Categories extends Component{
 
                                 <Button className="mr-2"
                                 variant="secondary" 
-                                onClick={()=>this.deletecat(cat.id)}>
+                                onClick={()=>this.deleteCat(cat.id)}>
                                 {<DeleteIcon/>}
                                 </Button>
 
                                 <EditCatModal
                                 show={this.state.editModalShow}
                                 onHide={editModalClose}
-                                catId={catId}
-                                catName={catName}/>
+                                catid={catId}
+                                catname={catName}/>
 
                             </ButtonToolbar>
                             </td>

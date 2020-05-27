@@ -17,10 +17,6 @@ export default class Waiters extends Component{
         this.refreshList();
     }
 
-    componentWillUnmount(){
-        this.refreshList();
-    }
-
     deleteWaiter(waiterId){
         if(window.confirm('Are you sure?')){
             axios.delete(`https://localhost:44399/api/Waiter/delete/${waiterId}`)

@@ -19,11 +19,6 @@ export default class Categories extends Component{
         this.refreshList();
     }
 
-    componentWillUnmount(){
-        this.setState({categories: [], 
-            addModalClose: false, editModalShow: false});
-    }
-
     deleteCat(catId){
         if(window.confirm('Are you sure?')){
             axios.delete(`https://localhost:44399/api/Category/delete/${catId}`)

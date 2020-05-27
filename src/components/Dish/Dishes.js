@@ -7,22 +7,18 @@ import AddIcon from '@material-ui/icons/Add';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import axios from 'axios';
+import SearchPanel from '../SearchPanel/SearchPanel';
 
 export default class Dishes extends Component{
 
     constructor(props){
         super(props);
         this.state = {dishes: [], categories: [],
-             addModalShow: false, editModalShow: false};
+             addModalShow: false, editModalShow: false, search: '', min: 0, max: 100000000};
     }
 
     componentDidMount(){
         this.refreshList();
-    }
-
-    componentWillUnmount(){
-        this.setState({dishes: [], categories: [], 
-            addModalClose: false, editModalShow: false});
     }
 
     deleteDish(dishId){
@@ -48,12 +44,36 @@ export default class Dishes extends Component{
         this.refreshList();
     }
 
+    onLabelSearch=(search)=>{
+        this.setState({search});
+    };
+
+    onChangeMax=(event)=>{
+        this.setState({max: event.target.value});
+    }
+
+    onChangeMin=(event)=>{
+        this.setState({min: event.target.value});
+    }
+
     render(){
-        const {dishes, dishId, dishName, dishCat, dishWeight, dishFP, dishMU, dishPrice} = this.state;
+        const {dishes, search, min, max, dishId, dishName, dishCat, dishWeight, dishFP, dishMU, dishPrice} = this.state;
         const addModalClose=()=>this.setState({addModalShow:false});
         const editModalClose=()=>this.setState({editModalShow:false});
+        const filterDishes = dishes.filter(dish =>{
+            return dish.name.toLocaleLowerCase().indexOf(search.toLocaleLowerCase()) > -1;
+        });
+        const filterPrice = filterDishes.filter(dish =>{
+            if(dish.price <= max && dish.price >= min){
+                return dish;
+            }
+            return null;
+        });
         return(
             <div>
+                <SearchPanel onLabelSearch={this.onLabelSearch}/>
+                <input type="text" className="form-control" placeholder='Min price' onChange={this.onChangeMin}/>
+                <input type="text" className="form-control" placeholder='Max price' onChange={this.onChangeMax}/>
                 <Table className='mt-4' size='sm'>
                 <thead>
                     <tr>
@@ -68,7 +88,7 @@ export default class Dishes extends Component{
                     </tr>
                 </thead>
                 <tbody>
-                    {dishes.map(dish=>
+                    {filterPrice.map(dish=>
                         <tr key={dish.id}>
                             <td>{dish.id}</td>
                             <td>{dish.name}</td>

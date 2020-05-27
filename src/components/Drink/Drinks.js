@@ -7,21 +7,17 @@ import AddIcon from '@material-ui/icons/Add';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import axios from 'axios';
+import SearchPanel from '../SearchPanel/SearchPanel';
 
 export default class Dishes extends Component{
 
     constructor(props){
         super(props);
-        this.state = {drinks: [], addModalShow: false, editModalShow: false};
+        this.state = {drinks: [], addModalShow: false, editModalShow: false, search: '', min: 0, max: 100000000};
     }
 
     componentDidMount(){
         this.refreshList();
-    }
-
-    componentWillUnmount(){
-        this.setState({drinks: [], categories: [], 
-            addModalClose: false, editModalShow: false});
     }
 
     deleteDrink(drinkId){
@@ -47,12 +43,36 @@ export default class Dishes extends Component{
         this.refreshList();
     }
 
+    onLabelSearch=(search)=>{
+        this.setState({search});
+    };
+
+    onChangeMax=(event)=>{
+        this.setState({max: event.target.value});
+    }
+
+    onChangeMin=(event)=>{
+        this.setState({min: event.target.value});
+    }
+
     render(){
-        const {drinks, drinkId, drinkName, drinkCat, drinkVolume, drinkFP, drinkMU, drinkPrice} = this.state;
+        const {drinks, search, min, max, drinkId, drinkName, drinkCat, drinkVolume, drinkFP, drinkMU, drinkPrice} = this.state;
         const addModalClose=()=>this.setState({addModalShow:false});
         const editModalClose=()=>this.setState({editModalShow:false});
+        const filterDrinks = drinks.filter(drink =>{
+            return drink.name.toLocaleLowerCase().indexOf(search.toLocaleLowerCase()) > -1;
+        });
+        const filterPrice = filterDrinks.filter(drink =>{
+            if(drink.price <= max && drink.price >= min){
+                return drink;
+            }
+            return null;
+        });
         return(
             <div>
+                <SearchPanel onLabelSearch={this.onLabelSearch}/>
+                <input type="text" className="form-control" placeholder='Min price' onChange={this.onChangeMin}/>
+                <input type="text" className="form-control" placeholder='Max price' onChange={this.onChangeMax}/>
                 <Table className='mt-4' size='sm'>
                 <thead>
                     <tr>
@@ -67,7 +87,7 @@ export default class Dishes extends Component{
                     </tr>
                 </thead>
                 <tbody>
-                    {drinks.map(drink=>
+                    {filterPrice.map(drink=>
                         <tr key={drink.id}>
                             <td>{drink.id}</td>
                             <td>{drink.name}</td>

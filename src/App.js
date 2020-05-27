@@ -7,18 +7,18 @@ import Drinks from './components/Drink/Drinks';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import Navigation from './components/Navigation';
 import Waiters from './components/Waiter/Waiters';
-
+import Reference from './components/ReferencesSystem/References';
 
 function App() {
   return (
     <BrowserRouter>
       <div className="container">
 
-        <h3 className='m-3 d-flex justify-content-center'>Cafe</h3>
-
+        <h1 className='m-3 d-flex justify-content-center'>Cafe</h1>
         <Navigation/>
 
         <Switch>
+          <Route path='/help' component={Reference}/>
           <Route path='/' component={Home} exact/>
           <Route path='/categories' component={Categories}/>
           <Route path='/menu/dishes' component={Dishes}/>
@@ -33,11 +33,3 @@ function App() {
 }
 
 export default App;
-/*
-<Switch>
-          <Route path='/' component={Home} exact/>
-          <Route path='/categories' component={Categories}/>
-          <Route path='/dishes' component={Dishes}/>
-          <Route path='/drinks' component={Drinks}/>
-        </Switch>
-*/

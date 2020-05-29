@@ -104,7 +104,7 @@ namespace Cafe.Services.DBServices
                 prevEntity.Name = newEntity.Name;
                 prevEntity.FirstPrice = newEntity.FirstPrice;
                 prevEntity.UnitId = newEntity.UnitId;
-                prevEntity.Weight = newEntity.Weight;
+                prevEntity.Amount = newEntity.Amount;
 
                 try
                 {

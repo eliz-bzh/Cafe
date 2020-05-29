@@ -102,7 +102,7 @@ namespace Cafe.Services.DBServices
                 }
 
                 prevEntity.IngredientId = newEntity.IngredientId;
-                prevEntity.UnitPrice = newEntity.UnitPrice;
+                prevEntity.TotalPrice = newEntity.TotalPrice;
 
                 try
                 {

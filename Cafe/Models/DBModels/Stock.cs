@@ -12,6 +12,6 @@ namespace Cafe.Models.DBModels
         [ForeignKey("Ingredient")]
         public int IngredientId { get; set; }
         public Ingredient Ingredient { get; set; }
-        public double UnitPrice { get; set; }
+        public double TotalPrice { get; set; }
     }
 }

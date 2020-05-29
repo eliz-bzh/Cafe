@@ -12,30 +12,30 @@ namespace Cafe.Controllers
 {
     [Route("api/[controller]")]
     [EnableCors("AllowMyOrigin")]
-    public class OrderController : Controller
+    public class IngredientController : Controller
     {
-        private readonly DBOrderService service;
+        private readonly DBIngredientService service;
 
-        public OrderController(DBOrderService service)
+        public IngredientController(DBIngredientService service)
         {
             this.service = service;
         }
 
         [HttpPost("create")]
-        public bool Create(Order order)
+        public bool Create(Ingredient ingredient)
         {
-            return service.Create(order);
+            return service.Create(ingredient);
         }
 
         [HttpPut("update")]
         //[FromBody]
-        public bool Update(Order order)
+        public bool Update(Ingredient ingredient)
         {
-            return service.Update(order);
+            return service.Update(ingredient);
         }
 
         [HttpGet("getById/{id}")]
-        public Order GetById(int id)
+        public Ingredient GetById(int id)
         {
             return service.GetById(id);
         }
@@ -47,7 +47,7 @@ namespace Cafe.Controllers
         }
 
         [HttpGet("getAll")]
-        public IList<Order> GetAll()
+        public IList<Ingredient> GetAll()
         {
             return service.GetAll();
         }

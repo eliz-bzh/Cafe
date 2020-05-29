@@ -9,7 +9,7 @@ namespace Cafe.Models.DBModels
     public class Order
     {
         public int Id { get; set; }
-        public DateTime Date { get; set; }
+        public DateTime? Date { get; set; }
         public int NumberTable { get; set; }
         [ForeignKey("Waiter")]
         public int WaiterId { get; set; }

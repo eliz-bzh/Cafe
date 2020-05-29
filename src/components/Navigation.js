@@ -11,7 +11,7 @@ export default class Navigation extends Component{
                 <Navbar.Toggle aria-controls='basic-navbar-nav'/>
                 <Navbar.Collapse id='basic-navbar-nav'>
                     <Nav className='col-sm-11'>
-                        <NavLink className='d-inline p-2 bg-dark text-white badge-pill' to='/'>
+                        <NavLink className='d-inline p-2 bg-dark text-white badge-pill' to='/home'>
                             Home
                         </NavLink>
                         <NavLink className='d-inline p-2 bg-dark text-white badge-pill' to='/waiters'>

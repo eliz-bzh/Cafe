@@ -6,18 +6,19 @@ import IconButton from "@material-ui/core/IconButton";
 import axios from 'axios';
 import qs from 'querystring';
 
-export default class EditDishModal extends Component{
+export default class EditOrderModal extends Component{
 
     constructor(props){
         super(props);
-        this.state = {categories:[], snackBaropen: false, snackBarMessage: ''};
+        this.state = {waiters:[], snackBaropen: false, snackBarMessage: '',
+        number: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20] };
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     componentDidMount(){
-        axios.get(`https://localhost:44399/api/Category/getAll`)
+        axios.get(`https://localhost:44399/api/Waiter/getAll`)
         .then(res=> {
-            this.setState({categories: res.data})
+            this.setState({waiters: res.data})
         });
     }
 
@@ -27,14 +28,12 @@ export default class EditDishModal extends Component{
 
     handleSubmit(event){
         event.preventDefault();
-        axios.put(`https://localhost:44399/api/Dish/update?${qs.stringify({
+        axios.put(`https://localhost:44399/api/Order/update?${qs.stringify({
             Id: event.target.id.value,
-            Name: event.target.name.value,
-            CategoryId: event.target.category.value,
-            Weight: event.target.weight.value,
-            FirstPrice: event.target.firstPrice.value,
-            MarkUp: event.target.markUp.value,
-            Price: event.target.price.value
+            Date: event.target.date.value,
+            NumberTable: event.target.numberTable.value,
+            WaiterId: event.target.waiter.value,
+            TotalPrice: event.target.totalPrice.value
         })}`)
         .then(res=> {
             console.log(res.data);
@@ -67,7 +66,7 @@ export default class EditDishModal extends Component{
                 centered>
                     <Modal.Header closeButton>
                         <Modal.Title id="contained-modal-title-vcenter">
-                            Editing dish
+                            Editing order
                         </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
@@ -75,72 +74,53 @@ export default class EditDishModal extends Component{
                             <Col sm={6}>
                                 <Form onSubmit={this.handleSubmit}>
                                     <Form.Group controlId="id">
-                                        <Form.Label>Dish number</Form.Label>
+                                        <Form.Label>Order number</Form.Label>
                                             <Form.Control 
                                             type="text"
                                             name="id"
                                             required
                                             disabled
-                                            defaultValue={this.props.dishid}
-                                            placeholder="Dish number"/>
+                                            defaultValue={this.props.orderid}
+                                            placeholder="Order number"/>
                                     </Form.Group>
-                                    <Form.Group controlId="name">
-                                        <Form.Label>Dish name</Form.Label>
+                                    <Form.Group controlId="date">
+                                        <Form.Label>Order date</Form.Label>
                                             <Form.Control 
-                                            type="text"
-                                            name="name"
+                                            type="date"
+                                            name="date"
                                             required
-                                            defaultValue={this.props.dishname}
-                                            placeholder="Dish name"/>
+                                            defaultValue={this.props.orderdate}
+                                            placeholder="Order date"/>
                                     </Form.Group>
-                                    <Form.Group controlId="category">
-                                        <Form.Label>Dish category</Form.Label>
+                                    <Form.Group controlId="numberTable">
+                                        <Form.Label>Number table</Form.Label>
                                         <Form.Control as="select"
-                                            defaultValue={this.props.dishcat}>
-                                            {this.state.categories.map(cat=>
-                                                <option key={cat.id}>{cat.id}</option>
+                                            defaultValue={this.props.ordernt}>
+                                            {this.state.number.map(num=>
+                                                <option key={num}>{num}</option>
                                             )}
                                         </Form.Control>
                                     </Form.Group>
-                                    <Form.Group controlId="weight">
-                                        <Form.Label>Dish weight</Form.Label>
-                                            <Form.Control 
-                                            type="text"
-                                            name="weight"
-                                            required
-                                            defaultValue={this.props.dishweight}
-                                            placeholder="Dish weight"/>
+                                    <Form.Group controlId="waiter">
+                                        <Form.Label>Number of waiter</Form.Label>
+                                        <Form.Control as="select">
+                                            {this.state.waiters.map(waiter=>
+                                                <option key={waiter.id}>{waiter.id}</option>
+                                            )}
+                                        </Form.Control>
                                     </Form.Group>
-                                    <Form.Group controlId="firstPrice">
-                                        <Form.Label>Dish first price</Form.Label>
+                                    <Form.Group controlId="totalPrice">
+                                        <Form.Label>Order total price</Form.Label>
                                             <Form.Control 
                                             type="text"
-                                            name="firstPrice"
+                                            name="totalPrice"
                                             required
-                                            defaultValue={this.props.dishfp}
-                                            placeholder="Dish first price"/>
-                                    </Form.Group>
-                                    <Form.Group controlId="markUp">
-                                        <Form.Label>Dish mark up</Form.Label>
-                                            <Form.Control 
-                                            type="text"
-                                            name="markUp"
-                                            required
-                                            defaultValue={this.props.dishmu}
-                                            placeholder="Dish mark up"/>
-                                    </Form.Group>
-                                    <Form.Group controlId="price">
-                                        <Form.Label>Dish price</Form.Label>
-                                            <Form.Control 
-                                            type="text"
-                                            name="price"
-                                            required
-                                            defaultValue={this.props.dishprice}
-                                            placeholder="Dish price"/>
+                                            defaultValue={this.props.ordertp}
+                                            placeholder="Order total price"/>
                                     </Form.Group>
                                     <Form.Group>
                                         <Button variant="primary" type="submit">
-                                            Edit dish
+                                            Edit order
                                         </Button>
                                     </Form.Group>
                                 </Form>

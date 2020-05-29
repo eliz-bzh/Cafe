@@ -57,7 +57,7 @@ export default class EditDrinkModal extends Component{
                 onClose={this.snackBarClose}
                 message={<span id='message-id'>{this.state.snackBarMessage}</span>}
                 action={[
-                    <IconButton key='close' arial-label='Close' color='inherit'
+                    <IconButton key='close' arial-label='close' color='inherit'
                         onClick={this.snackBarClose}></IconButton>
                 ]}/>
 

@@ -9,6 +9,9 @@ import Navigation from './components/Navigation';
 import Waiters from './components/Waiter/Waiters';
 import Reference from './components/ReferencesSystem/References';
 import SignInModal from './components/SignInModal/SignInModal';
+import Units from './components/Unit/Units';
+import Stock from './components/Stock/Stock';
+import Orders from './components/Order/Orders';
 
 function App() {
   return (
@@ -19,13 +22,20 @@ function App() {
             <Navigation/>
 
             <Switch>
-              <Route path='/help' component={Reference}/>
               <Route path='/' component={SignInModal} exact/>
               <Route path='/home' component={Home}/>
+              <Route path='/waiters' component={Waiters}/>
               <Route path='/categories' component={Categories}/>
               <Route path='/menu/dishes' component={Dishes}/>
               <Route path='/menu/drinks' component={Drinks}/>
-              <Route path='/waiters' component={Waiters}/>
+              <Route path='/units' component={Units}/>
+              
+              <Route path='/orders' component={Orders}/>
+              <Route path='/help' component={Reference}/>
+              
+              
+              
+              
             </Switch>
         </div>
     </BrowserRouter>
@@ -33,3 +43,4 @@ function App() {
 }
 
 export default App;
+//<Route path='/stock' component={Stock}/>

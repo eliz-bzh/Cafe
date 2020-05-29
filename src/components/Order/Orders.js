@@ -1,29 +1,28 @@
 import React, {Component} from 'react';
 import {Table} from 'react-bootstrap';
 import {Button, ButtonToolbar} from 'react-bootstrap';
-import AddDishModal from './AddDishModal';
-import EditDishModal from './EditDishModal';
+import AddOrderModal from './AddOrderModal';
+import EditOrderModal from './EditOrderModal';
 import AddIcon from '@material-ui/icons/Add';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import axios from 'axios';
-import SearchPanel from '../SearchPanel/SearchPanel';
 
-export default class Dishes extends Component{
+export default class Orders extends Component{
 
     constructor(props){
         super(props);
-        this.state = {dishes: [],
-             addModalShow: false, editModalShow: false, search: '', min: 0, max: 100000000};
+        this.state = {orders: [],
+             addModalShow: false, editModalShow: false, min: 0, max: 100000000};
     }
 
     componentDidMount(){
         this.refreshList();
     }
 
-    deleteDish(dishId){
+    deleteOrder(orderId){
         if(window.confirm('Are you sure?')){
-            axios.delete(`https://localhost:44399/api/Dish/delete/${dishId}`)
+            axios.delete(`https://localhost:44399/api/Order/delete/${orderId}`)
             .then(res=> {
                 console.log(res.data);
             })
@@ -34,19 +33,15 @@ export default class Dishes extends Component{
     }
 
     refreshList(){
-        axios.get(`https://localhost:44399/api/Dish/getAll`)
+        axios.get(`https://localhost:44399/api/Order/getAll`)
         .then(res=> {
-            this.setState({dishes: res.data})
+            this.setState({orders: res.data})
         });
     }
 
     componentDidUpdate(){
         this.refreshList();
     }
-
-    onLabelSearch=(search)=>{
-        this.setState({search});
-    };
 
     onChangeMax=(event)=>{
         this.setState({max: event.target.value});
@@ -57,59 +52,49 @@ export default class Dishes extends Component{
     }
 
     render(){
-        const {dishes, search, min, max, dishId, dishName, dishCat, dishWeight, dishFP, dishMU, dishPrice} = this.state;
+        const {orders, min, max, orderId, orderDate, orderNumberTable, orderWaiter, orderTotalPrice} = this.state;
         const addModalClose=()=>this.setState({addModalShow:false});
         const editModalClose=()=>this.setState({editModalShow:false});
-        const filterDishes = dishes.filter(dish =>{
-            return dish.name.toLocaleLowerCase().indexOf(search.toLocaleLowerCase()) > -1;
-        });
-        const filterPrice = filterDishes.filter(dish =>{
-            if(dish.price <= max && dish.price >= min){
-                return dish;
+        const filterOrders = orders.filter(order =>{
+            if(order.price <= max && order.price >= min){
+                return order;
             }
             return null;
         });
         return(
             <div>
-                <SearchPanel onLabelSearch={this.onLabelSearch}/>
                 <input type="text" className="form-control" placeholder='Min price' onChange={this.onChangeMin}/>
                 <input type="text" className="form-control" placeholder='Max price' onChange={this.onChangeMax}/>
                 <Table className='mt-4' size='sm'>
                 <thead>
                     <tr>
-                        <th>Dish number</th>
-                        <th>Dish name</th>
-                        <th>Dish category Id</th>
-                        <th>Dish weight</th>
-                        <th>Dish first price</th>
-                        <th>Dish mark up</th>
-                        <th>Dish price</th>
+                        <th>Order number</th>
+                        <th>Order date</th>
+                        <th>Number table</th>
+                        <th>Number of waiter</th>
+                        <th>Order total price</th>
                         <th>Options</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {filterPrice.map(dish=>
-                        <tr key={dish.id}>
-                            <td>{dish.id}</td>
-                            <td>{dish.name}</td>
-                            <td>{dish.categoryId}</td>
-                            <td>{dish.weight}</td>
-                            <td>{dish.firstPrice}</td>
-                            <td>{dish.markUp}</td>
-                            <td>{dish.price}</td>
+                    {orders.map(order=>
+                        <tr key={order.id}>
+                            <td>{order.id}</td>
+                            <td>{new Date(order.date).toLocaleDateString('en-GB')}</td>
+                            <td>{order.numberTable}</td>
+                            <td>{order.waiterId}</td>
+                            <td>{order.totalPrice}</td>
                             <td>
                             <ButtonToolbar>
                                 <Button 
                                 variant="success" 
                                 onClick={()=>this.setState({
                                     editModalShow: true, 
-                                    dishId: dish.id,
-                                    dishName: dish.name,
-                                    dishCat: dish.categoryId,
-                                    dishWeight: dish.weight,
-                                    dishFP: dish.firstPrice,
-                                    dishMU: dish.markUp,
-                                    dishPrice: dish.price
+                                    orderId: order.id,
+                                    orderDate: order.date,
+                                    orderNumberTable: order.numberTable,
+                                    orderWaiter: order.waiter,
+                                    orderTotalPrice: order.totalPrice
                                     })}>
                                 {<EditIcon/>}
                                 </Button>
@@ -118,20 +103,18 @@ export default class Dishes extends Component{
 
                                 <Button className="mr-2"
                                 variant="secondary" 
-                                onClick={()=>this.deleteDish(dish.id)}>
+                                onClick={()=>this.deleteOrder(order.id)}>
                                 {<DeleteIcon/>}
                                 </Button>
 
-                                <EditDishModal
+                                <EditOrderModal
                                 show={this.state.editModalShow}
                                 onHide={editModalClose}
-                                dishid={dishId}
-                                dishname={dishName}
-                                dishcat={dishCat}
-                                dishweight={dishWeight}
-                                dishfp={dishFP}
-                                dishmu={dishMU}
-                                dishprice={dishPrice}
+                                orderid={orderId}
+                                orderdate={orderDate}
+                                ordernt={orderNumberTable}
+                                orderwaiter={orderWaiter}
+                                ordertp={orderTotalPrice}
                                 />
 
                             </ButtonToolbar>
@@ -146,10 +129,10 @@ export default class Dishes extends Component{
                 variant="danger" 
                 onClick={()=>this.setState({addModalShow: true})}>
                     {<AddIcon/>}
-                    Add dish
+                    Add order
                 </Button>
 
-                <AddDishModal
+                <AddOrderModal
                 show={this.state.addModalShow}
                 onHide={addModalClose}/>
             </ButtonToolbar>

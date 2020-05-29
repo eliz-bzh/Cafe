@@ -35,7 +35,7 @@ export default class References extends Component{
                         {<AddIcon/>}
                         Add ...
                     </Button>
-                    <span>Кнопка для функции добавления. 
+                    <span className='span-style'>Кнопка для функции добавления. 
                     Нажав на неё отобразиться модель для добавления нового элемента в список.</span>
                     <div>
                     <Modal
@@ -84,7 +84,7 @@ export default class References extends Component{
                     variant="success">
                     {<EditIcon/>}
                     </Button>
-                    <span>Кнопка для функции редактирования. 
+                    <span className='span-style'>Кнопка для функции редактирования. 
                     Нажав на неё отобразиться модель для редактирования выбраного элемента в списоке со старыми данными.</span>
                     <div>
                     <Modal
@@ -133,7 +133,7 @@ export default class References extends Component{
                     variant="secondary">
                     {<DeleteIcon/>}
                     </Button>
-                    <span className='text'>Кнопка для функции удаления. 
+                    <span className='span-style'>Кнопка для функции удаления. 
                     Нажав на неё отобразиться окно соглашения на удаление выбраного элемента из списка.</span>
                     </div>
                 </ButtonToolbar>

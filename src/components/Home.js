@@ -4,8 +4,9 @@ export default class Home extends Component{
 
     render(){
         return(
-            <div className='mt-5 d-flex justify-content-left'>
-                <h3>Home</h3>
+            <div className='mt-5'>
+                <h1>Home</h1>
+                <h3>Welcome to the Cafe app</h3>
             </div>
         );
     };

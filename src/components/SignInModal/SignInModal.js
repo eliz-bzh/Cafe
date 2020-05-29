@@ -30,7 +30,7 @@ export default class SignInModal extends Component{
                         <Row>
                             <Col>
                                 <Form onSubmit={this.handleSubmit}>
-                                    <Form.Label className='h2 mb-3 font-weight-normal'>Please sign in</Form.Label>
+                                    <Form.Label className='h2 mb-3 font-weight-normal d-flex justify-content-center'>Please sign in</Form.Label>
                                     <Form.Group>
                                         <Form.Control
                                             type="text"

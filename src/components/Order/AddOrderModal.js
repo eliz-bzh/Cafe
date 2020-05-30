@@ -3,6 +3,7 @@ import {Modal, Row, Col, Form} from 'react-bootstrap';
 import {Button} from 'react-bootstrap';
 import SnackBar from '@material-ui/core/Snackbar';
 import IconButton from "@material-ui/core/IconButton";
+import Tooltip from '@material-ui/core/Tooltip';
 import axios from 'axios';
 import qs from 'querystring';
 
@@ -92,7 +93,9 @@ export default class AddOrderModal extends Component{
                                         <Form.Label>Number of waiter</Form.Label>
                                         <Form.Control as="select">
                                             {this.state.waiters.map(waiter=>
+                                            <Tooltip key={waiter.id} title={waiter.name + ' ' + waiter.surname}>
                                                 <option key={waiter.id}>{waiter.id}</option>
+                                            </Tooltip>
                                             )}
                                         </Form.Control>
                                     </Form.Group>

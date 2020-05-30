@@ -13,11 +13,15 @@ export default class Dishes extends Component{
 
     constructor(props){
         super(props);
-        this.state = {dishes: [],
+        this.state = {dishes: [], categories: [],
              addModalShow: false, editModalShow: false, search: '', min: 0, max: 100000000};
     }
 
     componentDidMount(){
+        axios.get(`https://localhost:44399/api/Category/getAll`)
+        .then(res=> {
+            this.setState({categories: res.data})
+        });
         this.refreshList();
     }
 
@@ -57,7 +61,7 @@ export default class Dishes extends Component{
     }
 
     render(){
-        const {dishes, search, min, max, dishId, dishName, dishCat, dishWeight, dishFP, dishMU, dishPrice} = this.state;
+        const {dishes, categories, search, min, max, dishId, dishName, dishCat, dishWeight, dishFP, dishMU, dishPrice} = this.state;
         const addModalClose=()=>this.setState({addModalShow:false});
         const editModalClose=()=>this.setState({editModalShow:false});
         const filterDishes = dishes.filter(dish =>{
@@ -79,7 +83,7 @@ export default class Dishes extends Component{
                     <tr>
                         <th>Dish number</th>
                         <th>Dish name</th>
-                        <th>Dish category Id</th>
+                        <th>Dish category</th>
                         <th>Dish weight</th>
                         <th>Dish first price</th>
                         <th>Dish mark up</th>
@@ -92,7 +96,7 @@ export default class Dishes extends Component{
                         <tr key={dish.id}>
                             <td>{dish.id}</td>
                             <td>{dish.name}</td>
-                            <td>{dish.categoryId}</td>
+                            <td>{categories.map(cat=>{if(cat.id === dish.categoryId){return cat.name}})}</td>
                             <td>{dish.weight}</td>
                             <td>{dish.firstPrice}</td>
                             <td>{dish.markUp}</td>

@@ -10,7 +10,7 @@ import Waiters from './components/Waiter/Waiters';
 import Reference from './components/ReferencesSystem/References';
 import SignInModal from './components/SignInModal/SignInModal';
 import Units from './components/Unit/Units';
-import Stock from './components/Stock/Stock';
+//import Stock from './components/Stock/Stock';
 import Orders from './components/Order/Orders';
 
 function App() {
@@ -32,10 +32,7 @@ function App() {
               
               <Route path='/orders' component={Orders}/>
               <Route path='/help' component={Reference}/>
-              
-              
-              
-              
+
             </Switch>
         </div>
     </BrowserRouter>

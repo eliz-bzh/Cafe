@@ -5,6 +5,7 @@ import SnackBar from '@material-ui/core/Snackbar';
 import IconButton from "@material-ui/core/IconButton";
 import axios from 'axios';
 import qs from 'querystring';
+import Tooltip from '@material-ui/core/Tooltip';
 
 export default class AddDrinkModal extends Component{
 
@@ -86,7 +87,9 @@ export default class AddDrinkModal extends Component{
                                         <Form.Label>Drink category</Form.Label>
                                         <Form.Control as="select">
                                             {this.state.categories.map(cat=>
+                                            <Tooltip key={cat.id} title={cat.name}>
                                                 <option key={cat.id}>{cat.id}</option>
+                                            </Tooltip>
                                             )}
                                         </Form.Control>
                                     </Form.Group>

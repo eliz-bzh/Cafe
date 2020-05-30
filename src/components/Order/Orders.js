@@ -12,11 +12,15 @@ export default class Orders extends Component{
 
     constructor(props){
         super(props);
-        this.state = {orders: [],
-             addModalShow: false, editModalShow: false, min: 0, max: 100000000};
+        this.state = {orders: [], waiters: [],
+             addModalShow: false, editModalShow: false};
     }
 
     componentDidMount(){
+        axios.get(`https://localhost:44399/api/Waiter/getAll`)
+        .then(res=> {
+            this.setState({waiters: res.data})
+        });
         this.refreshList();
     }
 
@@ -43,35 +47,19 @@ export default class Orders extends Component{
         this.refreshList();
     }
 
-    onChangeMax=(event)=>{
-        this.setState({max: event.target.value});
-    }
-
-    onChangeMin=(event)=>{
-        this.setState({min: event.target.value});
-    }
-
     render(){
-        const {orders, min, max, orderId, orderDate, orderNumberTable, orderWaiter, orderTotalPrice} = this.state;
+        const {orders, waiters, orderId, orderDate, orderNumberTable, orderWaiter, orderTotalPrice} = this.state;
         const addModalClose=()=>this.setState({addModalShow:false});
         const editModalClose=()=>this.setState({editModalShow:false});
-        const filterOrders = orders.filter(order =>{
-            if(order.price <= max && order.price >= min){
-                return order;
-            }
-            return null;
-        });
         return(
             <div>
-                <input type="text" className="form-control" placeholder='Min price' onChange={this.onChangeMin}/>
-                <input type="text" className="form-control" placeholder='Max price' onChange={this.onChangeMax}/>
                 <Table className='mt-4' size='sm'>
                 <thead>
                     <tr>
                         <th>Order number</th>
                         <th>Order date</th>
                         <th>Number table</th>
-                        <th>Number of waiter</th>
+                        <th>Waiter</th>
                         <th>Order total price</th>
                         <th>Options</th>
                     </tr>
@@ -82,7 +70,7 @@ export default class Orders extends Component{
                             <td>{order.id}</td>
                             <td>{new Date(order.date).toLocaleDateString('en-GB')}</td>
                             <td>{order.numberTable}</td>
-                            <td>{order.waiterId}</td>
+                            <td>{waiters.map(w=>{if(w.id === order.waiterId){return w.name +' '+ w.surname}})}</td>
                             <td>{order.totalPrice}</td>
                             <td>
                             <ButtonToolbar>

@@ -13,10 +13,16 @@ export default class Dishes extends Component{
 
     constructor(props){
         super(props);
-        this.state = {drinks: [], addModalShow: false, editModalShow: false, search: '', min: 0, max: 100000000};
+        this.state = {drinks: [], categories:[],
+            addModalShow: false, editModalShow: false,
+            search: '', min: 0, max: 100000000};
     }
 
     componentDidMount(){
+        axios.get(`https://localhost:44399/api/Category/getAll`)
+        .then(res=> {
+            this.setState({categories: res.data});
+        })
         this.refreshList();
     }
 
@@ -56,7 +62,7 @@ export default class Dishes extends Component{
     }
 
     render(){
-        const {drinks, search, min, max, drinkId, drinkName, drinkCat, drinkVolume, drinkFP, drinkMU, drinkPrice} = this.state;
+        const {drinks, categories, search, min, max, drinkId, drinkName, drinkCat, drinkVolume, drinkFP, drinkMU, drinkPrice} = this.state;
         const addModalClose=()=>this.setState({addModalShow:false});
         const editModalClose=()=>this.setState({editModalShow:false});
         const filterDrinks = drinks.filter(drink =>{
@@ -91,7 +97,7 @@ export default class Dishes extends Component{
                         <tr key={drink.id}>
                             <td>{drink.id}</td>
                             <td>{drink.name}</td>
-                            <td>{drink.categoryId}</td>
+                            <td>{categories.map(cat=>{if(cat.id === drink.categoryId){return cat.name}})}</td>
                             <td>{drink.volume}</td>
                             <td>{drink.firstPrice}</td>
                             <td>{drink.markUp}</td>

@@ -11,7 +11,7 @@ namespace Cafe.Models.DBModels
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public int Amount { get; set; }
+        public double Amount { get; set; }
         [ForeignKey("Units")]
         public int UnitId { get; set; }
         public Units Units { get; set; }

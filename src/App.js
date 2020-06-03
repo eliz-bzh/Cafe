@@ -10,7 +10,7 @@ import Waiters from './components/Waiter/Waiters';
 import Reference from './components/ReferencesSystem/References';
 import SignInModal from './components/SignInModal/SignInModal';
 import Units from './components/Unit/Units';
-//import Stock from './components/Stock/Stock';
+import Stock from './components/Stock/Stock';
 import Orders from './components/Order/Orders';
 
 function App() {
@@ -29,10 +29,9 @@ function App() {
               <Route path='/menu/dishes' component={Dishes}/>
               <Route path='/menu/drinks' component={Drinks}/>
               <Route path='/units' component={Units}/>
-              
+              <Route path='/stock' component={Stock}/>
               <Route path='/orders' component={Orders}/>
               <Route path='/help' component={Reference}/>
-
             </Switch>
         </div>
     </BrowserRouter>
@@ -40,4 +39,3 @@ function App() {
 }
 
 export default App;
-//<Route path='/stock' component={Stock}/>

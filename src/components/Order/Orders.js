@@ -6,6 +6,7 @@ import EditOrderModal from './EditOrderModal';
 import AddIcon from '@material-ui/icons/Add';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
+import ImportExportIcon from '@material-ui/icons/ImportExport';
 import axios from 'axios';
 
 export default class Orders extends Component{
@@ -39,6 +40,7 @@ export default class Orders extends Component{
     refreshList(){
         axios.get(`https://localhost:44399/api/Order/getAll`)
         .then(res=> {
+            console.log(res.data.ToArray());
             this.setState({orders: res.data})
         });
     }
@@ -120,9 +122,21 @@ export default class Orders extends Component{
                     Add order
                 </Button>
 
+                <div className="mr-2"/>
+
+                <Button 
+                className="mr-2" 
+                variant='secondary'
+                onClick={this.onImportClick.bind(this)}>
+                    {<ImportExportIcon/>}
+                    Export all to word
+                </Button>
+
                 <AddOrderModal
                 show={this.state.addModalShow}
                 onHide={addModalClose}/>
+
+                
             </ButtonToolbar>
             </div>
         )

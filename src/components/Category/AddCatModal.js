@@ -10,7 +10,7 @@ export default class AddCatModal extends Component{
 
     constructor(props){
         super(props);
-        this.state = {snackBaropen: false, snackBarMessage: '', name: ''};
+        this.state = {snackBaropen: false, snackBarMessage: ''};
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 

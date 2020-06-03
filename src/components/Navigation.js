@@ -31,7 +31,9 @@ export default class Navigation extends Component{
                         <NavLink className='d-inline p-2 bg-dark text-white badge-pill' to='/units'>
                             Units
                         </NavLink>
-                        
+                        <NavLink className='d-inline p-2 bg-dark text-white badge-pill' to='/stock'>
+                            Stock
+                        </NavLink>
                     </Nav>
                     <Nav>
                     <NavLink className='d-inline p-2 bg-dark text-white badge badge-secondary badge-pill' to='/help'>
@@ -43,9 +45,3 @@ export default class Navigation extends Component{
         );
     };
 };
-/*
-<NavLink className='d-inline p-2 bg-dark text-white badge-pill' to='/stock'>
-                            Stock
-                        </NavLink>
-
-*/

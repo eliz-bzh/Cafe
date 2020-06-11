@@ -3,6 +3,7 @@ import {Modal, Row, Col, Form} from 'react-bootstrap';
 import {Button} from 'react-bootstrap';
 import SnackBar from '@material-ui/core/Snackbar';
 import IconButton from "@material-ui/core/IconButton";
+import CloseIcon from '@material-ui/icons/Close';
 import axios from 'axios';
 import qs from 'querystring';
 
@@ -38,14 +39,15 @@ export default class AddCatModal extends Component{
         return(
             <div className='container'>
                 <SnackBar
-                anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+                anchorOrigin={{vertical: 'bottom', horizontal: 'center'}}
                 open={this.state.snackBaropen}
                 autoHideDuration={1000}
                 onClose={this.snackBarClose}
         message={<span id='message-id'>{this.state.snackBarMessage}</span>}
         action={[
-            <IconButton key='close' aria-label="close" color='inherit'
-            onClick={this.snackBarClose}></IconButton>
+            <IconButton color="inherit" size="small"
+                    onClick={this.snackBarClose}
+                    ><CloseIcon/></IconButton>
         ]}/>
             <Modal
       {...this.props}

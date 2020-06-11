@@ -9,7 +9,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import axios from 'axios';
 import SearchPanel from '../SearchPanel/SearchPanel';
 
-export default class Dishes extends Component{
+export default class Drinks extends Component{
 
     constructor(props){
         super(props);

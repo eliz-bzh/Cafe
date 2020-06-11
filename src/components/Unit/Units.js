@@ -8,7 +8,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import axios from 'axios';
 
-export default class Categories extends Component{
+export default class Units extends Component{
 
     constructor(props){
         super(props);

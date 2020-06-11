@@ -7,13 +7,16 @@ import AddIcon from '@material-ui/icons/Add';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import ImportExportIcon from '@material-ui/icons/ImportExport';
+import SnackBar from '@material-ui/core/Snackbar';
+import CloseIcon from '@material-ui/icons/Close';
+import IconButton from '@material-ui/core/IconButton';
 import axios from 'axios';
 
 export default class Orders extends Component{
 
     constructor(props){
         super(props);
-        this.state = {orders: [], waiters: [],
+        this.state = {orders: [], waiters: [], snackBaropen: false, snackBarMessage: '',
              addModalShow: false, editModalShow: false};
     }
 
@@ -40,8 +43,24 @@ export default class Orders extends Component{
     refreshList(){
         axios.get(`https://localhost:44399/api/Order/getAll`)
         .then(res=> {
-            console.log(res.data.ToArray());
+            console.log(res.data);
             this.setState({orders: res.data})
+        });
+    }
+
+    snackBarClose=(event)=>{
+        this.setState({snackBaropen: false});
+    }
+
+    export=(event)=>{
+        event.preventDefault();
+        axios.get(`https://localhost:44399/api/Order/excelDoc`)
+        .then(res=>{
+            this.setState({snackBaropen: true, snackBarMessage: `File is located ${res.data}`});
+        })
+        .catch(error=> {
+            console.log(error);
+            this.setState({snackBaropen: true, snackBarMessage: 'Failed export'});
         });
     }
 
@@ -55,6 +74,22 @@ export default class Orders extends Component{
         const editModalClose=()=>this.setState({editModalShow:false});
         return(
             <div>
+                <SnackBar
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+                open={this.state.snackBaropen}
+                autoHideDuration={3000}
+                onClose={this.snackBarClose}
+                message={<span id='message-id'>{this.state.snackBarMessage}</span>}
+                action={[
+                    <IconButton
+                    color="inherit"
+                    size="small"
+                    onClick={this.snackBarClose}
+                    >
+                      <CloseIcon />
+                  </IconButton>
+                ]}/>
+            
                 <Table className='mt-4' size='sm'>
                 <thead>
                     <tr>
@@ -127,18 +162,25 @@ export default class Orders extends Component{
                 <Button 
                 className="mr-2" 
                 variant='secondary'
-                onClick={this.onImportClick.bind(this)}>
+                type='submit'
+                onClick={this.export}>
                     {<ImportExportIcon/>}
-                    Export all to word
+                    Export all to Excel
                 </Button>
 
                 <AddOrderModal
                 show={this.state.addModalShow}
                 onHide={addModalClose}/>
 
-                
             </ButtonToolbar>
             </div>
         )
     }
 }
+/*
+<Button variant='inherit'
+                    onClick={this.snackBarClose}>
+                        {<CloseIcon color="white"
+                        />}
+                    </Button >
+*/

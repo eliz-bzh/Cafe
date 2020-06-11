@@ -3,6 +3,7 @@ import {Modal, Row, Col, Form} from 'react-bootstrap';
 import {Button} from 'react-bootstrap';
 import SnackBar from '@material-ui/core/Snackbar';
 import IconButton from "@material-ui/core/IconButton";
+import CloseIcon from '@material-ui/icons/Close';
 import axios from 'axios';
 import qs from 'querystring';
 import Tooltip from '@material-ui/core/Tooltip';
@@ -57,8 +58,9 @@ export default class AddDrinkModal extends Component{
                 onClose={this.snackBarClose}
                 message={<span id='message-id'>{this.state.snackBarMessage}</span>}
                 action={[
-                    <IconButton key='close' aria-label="close" color='inherit'
-                    onClick={this.snackBarClose}></IconButton>
+                    <IconButton color="inherit" size="small"
+                    onClick={this.snackBarClose}
+                    ><CloseIcon/></IconButton>
                 ]}/>
 
                 <Modal
